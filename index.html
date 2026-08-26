@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>𝐅𝐎𝐑 𝐁𝐔𝐒𝐒𝐈𝐃</title>
+<link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --primary: #ffeb3b;
+  --secondary: #f59e0b;
+  --bg-dark: #030712;
+  --card-bg: rgba(15, 23, 42, 0.75);
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.12);
+  --accent: #ff4757;
+  --accent-hover: #ff6b81;
+}
+
+* { 
+  box-sizing: border-box; 
+  -webkit-tap-highlight-color: transparent; 
+}
+
+body {
+  font-family: 'Hind Siliguri', sans-serif;
+  margin: 0; padding: 0;
+  background: var(--bg-dark); 
+  color: #ffffff;
+  overflow-x: hidden; 
+  width: 100%;
+  min-height: 100vh;
+}
+
+body::before {
+  content: ""; 
+  position: fixed; 
+  top: 0; left: 0; 
+  width: 100%; height: 100%;
+  background: linear-gradient(180deg, rgba(3, 7, 18, 0.85) 0%, rgba(3, 7, 18, 0.95) 100%), 
+              url('https://i.ibb.co.com/XxdbqTH6/IMG-20260417-WA0016.jpg');
+  background-size: cover; 
+  background-position: center; 
+  z-index: -2;
+}
+
+.main-container { 
+  max-width: 500px; 
+  margin: 0 auto; 
+  padding: 30px 16px; 
+  text-align: center; 
+}
+
+/* --- ব্যাক বাটন ওভারলে --- */
+.back-overlay-btn {
+  position: fixed;
+  top: 18px;
+  left: 16px;
+  background: linear-gradient(135deg, var(--accent), #e11d48);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+  z-index: 1000;
+  display: none;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(8px);
+}
+
+.back-overlay-btn:active { 
+  transform: scale(0.92); 
+}
+
+.logo-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 12px;
+}
+
+.logo-top { 
+  width: 105px; 
+  height: 105px; 
+  border-radius: 50%; 
+  border: 3px solid var(--primary); 
+  object-fit: cover; 
+  box-shadow: 0 0 25px rgba(255, 235, 59, 0.4);
+  transition: transform 0.4s ease;
+}
+
+.logo-top:hover {
+  transform: scale(1.05) rotate(2deg);
+}
+
+.site-title {
+  color: var(--primary);
+  margin: 0 0 24px 0;
+  font-size: 26px;
+  font-weight: 700;
+  text-shadow: 0 2px 10px rgba(255, 235, 59, 0.3);
+  letter-spacing: 0.5px;
+}
+
+/* বাটন গ্রিড */
+.button-grid { 
+  display: grid; 
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 14px; 
+  margin: 10px 0 30px 0; 
+}
+
+.tab-btn {
+  aspect-ratio: 1/1; 
+  background: linear-gradient(145deg, rgba(255, 235, 59, 0.9), rgba(245, 158, 11, 0.9));
+  color: #000; 
+  font-weight: 700; 
+  font-size: 17px;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center;
+  border-radius: 22px; 
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3), inset 0 2px 4px rgba(255, 255, 255, 0.4); 
+  cursor: pointer; 
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 10px;
+}
+
+.tab-btn .icon {
+  font-size: 28px;
+  margin-bottom: 6px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.tab-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.tab-btn.dev-btn {
+  grid-column: span 2; 
+  aspect-ratio: auto; 
+  height: 70px; 
+  flex-direction: row;
+  gap: 12px;
+  background: linear-gradient(135deg, #1e293b, #0f172a); 
+  color: white;
+  border: 1px solid var(--glass-border);
+}
+
+.tab-btn.apply-btn {
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: white;
+}
+
+.tab-btn.media-btn {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: white;
+}
+
+/* সেকশন ডিজাইন */
+.section {
+  display: none; 
+  width: 100%; 
+  margin-top: 20px; 
+  padding: 24px 20px;
+  background: var(--card-bg); 
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border); 
+  border-radius: 24px;
+  text-align: left; 
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  animation: fadeInSlide 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.section-title {
+  text-align: center; 
+  color: var(--primary);
+  font-size: 22px;
+  margin-top: 0;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 235, 59, 0.2);
+}
+
+.media-btn-long {
+  width: 100%; 
+  min-height: 48px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  text-decoration: none; 
+  color: white; 
+  font-weight: 600; 
+  border-radius: 14px; 
+  margin: 12px 0;
+  padding: 10px 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255,255,255,0.15);
+}
+
+.media-btn-long:active {
+  transform: scale(0.97);
+}
+
+.admin-card {
+  background: rgba(0, 0, 0, 0.4); 
+  border-radius: 20px; 
+  padding: 20px;
+  margin-bottom: 18px; 
+  border: 1px solid rgba(255, 235, 59, 0.3); 
+  text-align: center;
+}
+
+.admin-img { 
+  width: 90px; 
+  height: 90px; 
+  border-radius: 50%; 
+  border: 2px solid var(--primary); 
+  margin-bottom: 10px; 
+  object-fit: cover;
+}
+
+.action-btn {
+  display: block; 
+  padding: 12px; 
+  border-radius: 12px; 
+  text-decoration: none; 
+  margin: 10px 0 0 0; 
+  font-weight: 600;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+
+.action-btn:active { opacity: 0.85; }
+.call-btn { background: #10b981; color: white; }
+.fb-btn { background: #2563eb; color: white; }
+
+.rule-list { list-style: none; padding: 0; margin: 0; }
+.rule-list li { 
+  background: rgba(255, 255, 255, 0.04); 
+  margin-bottom: 10px; 
+  padding: 14px; 
+  border-radius: 14px; 
+  border-left: 4px solid var(--primary); 
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.trip-card {
+  padding: 16px; 
+  background: rgba(255, 235, 59, 0.05); 
+  border-radius: 16px; 
+  border: 1px dashed rgba(255, 235, 59, 0.4); 
+  text-align: center;
+}
+
+.trip-card h3 {
+  color: var(--primary); 
+  margin: 8px 0;
+  font-size: 18px;
+}
+
+.player-item {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px 16px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+}
+
+@keyframes fadeInSlide { 
+  from { 
+    opacity: 0; 
+    transform: translateY(20px) scale(0.98); 
+  } 
+  to { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+  } 
+}
+</style>
+</head>
+<body>
+
+<script src="https://quge5.com/88/tag.min.js" data-zone="263053" async data-cfasync="false"></script>
+<script>(function(s){s.dataset.zone='11379803',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+
+<div id="backBtn" class="back-overlay-btn" onclick="backToMenu()">
+  <span>↩️</span> ব্যাক
+</div>
+
+<div class="main-container">
+
+  <div class="logo-container">
+    <img src="https://i.ibb.co.com/XxdbqTH6/IMG-20260417-WA0016.jpg" class="logo-top" alt="Bangladesh Bus Group Logo">
+  </div>
+  <h1 class="site-title">🇧🇩 𝐅𝐎𝐑 𝐁𝐔𝐒𝐒𝐈𝐃 🇧🇩</h1>
+
+  <!-- মূল মেনু গ্রিড -->
+  <div class="button-grid" id="menuGrid">
+    <div class="tab-btn" onclick="openTab('rules')">
+      <span class="icon">📜</span>
+      <span>গ্রুপ নিয়ম</span>
+    </div>
+    <div class="tab-btn" onclick="openTab('game')">
+      <span class="icon">🎮</span>
+      <span>খেলার রুলস</span>
+    </div>
+    <div class="tab-btn" onclick="openTab('players')">
+      <span class="icon">🌟</span>
+      <span>এক্টিভ প্লেয়ার</span>
+    </div>
+    <div class="tab-btn" onclick="openTab('trip')">
+      <span class="icon">🚌</span>
+      <span>ট্রিপ টাইম</span>
+    </div>
+    <div class="tab-btn" onclick="openTab('notice')">
+      <span class="icon">📢</span>
+      <span>নোটিশ বোর্ড</span>
+    </div>
+    <div class="tab-btn" onclick="openTab('admin')">
+      <span class="icon">👥</span>
+      <span>এডমিন প্যানেল</span>
+    </div>
+    <div class="tab-btn apply-btn" onclick="openTab('apply')">
+      <span class="icon">📝</span>
+      <span>আবেদন ফরম</span>
+    </div>
+    <div class="tab-btn media-btn" onclick="openTab('media')">
+      <span class="icon">🔗</span>
+      <span>গ্রুপ মিডিয়া</span>
+    </div>
+    <div class="tab-btn dev-btn" onclick="openTab('dev')">
+      <span class="icon">👨‍💻</span>
+      <span>ডেভেলপার পরিচয়</span>
+    </div>
+  </div>
+
+  <!-- সেকশনসমূহ -->
+
+  <div id="rules" class="section">
+    <h2 class="section-title">📜 গ্রুপ নিয়মাবলী</h2>
+    <ul class="rule-list">
+      <li>🎮 শুধু BUSSID গেম নিয়ে আলোচনা করা যাবে।</li>
+      <li>🔗 গেম লিংক, মোড ও স্কিন শেয়ার করা যাবে।</li>
+      <li>🛑 গালাগালি ও খারাপ ভাষা ব্যবহার সম্পূর্ণ নিষিদ্ধ।</li>
+      <li>📢 অন্য গ্রুপ বা চ্যানেল প্রমোশন করা নিষিদ্ধ।</li>
+      <li>⚠️ হ্যাকিং ব্যবহারে আইডি সরাসরি ব্যান করা হবে।</li>
+    </ul>
+    <div style="background: rgba(255, 71, 87, 0.2); border: 1px solid #ff4757; padding: 12px; border-radius: 12px; text-align: center; color: #ffccd5; font-weight: 600; margin-top: 15px;">
+      🗳️ রাজনৈতিক আলোচনা কঠোরভাবে নিষিদ্ধ
+    </div>
+<br>
+<div class="ad-box ad-sidebar" style="padding:0; border:none; background:transparent;">
+    <a href="https://youtu.be/dPlQT_U0zn4" target="_blank" rel="noopener noreferrer">
+        <img 
+            src="https://i.postimg.cc/HLtBLNpT/IMG-20260820-004458-178.jpg"
+            alt="Advertisement"
+            style="display:block; width:100%; height:auto; border-radius:12px;"
+        >
+    </a>
+</div>
+
+  </div>
+
+  <div id="game" class="section">
+    <h2 class="section-title">🎮 Gameplay Rules</h2>
+    <ul class="rule-list">
+      <li>⏱️ মাস্টার Ready বললে সাথে সাথে রেডি দেবেন।</li>
+      <li>🚦 মাস্টার Go না বলা পর্যন্ত গাড়ি ছাড়বেন না।</li>
+      <li>🎥 ভিডিও চলাকালীন সময়ে অবশ্যই Dipper দিবেন।</li>
+      <li>❌ স্পিড হ্যাক বা স্পিড ফাইল ব্যবহার সম্পূর্ণ নিষিদ্ধ।</li>
+      <li>🗺️ লোডিং এর পর সুন্দরভাবে লাইন বজায় রাখুন।</li>
+    </ul>
+
+<div class="ad-box ad-sidebar" style="padding:0; border:none; background:transparent;">
+    <a href="https://bdbusloveratik65.github.io/Bussid-Mod-Hub-/" target="_blank" rel="noopener noreferrer">
+        <img 
+            src="https://i.postimg.cc/cHKdhkB0/Screenshot-2026-0525-014810.png"
+            alt="Advertisement"
+            style="display:block; width:100%; height:auto; border-radius:12px;"
+        >
+    </a>
+</div>
+
+  </div>
+
+  <div id="players" class="section">
+    <h2 class="section-title">🌟 Active Players</h2>
+    <div class="player-item">মোঃ তাসনিম</div>
+    <div class="player-item">রাকিবুল ইসলাম</div>
+    <div class="player-item">আতিকুর রহমান</div>
+    <div class="player-item">তাহমিদ</div>
+    <div class="player-item">রাজু</div>
+  </div>
+
+  <div id="trip" class="section">
+    <h2 class="section-title">🚌 Trip Schedule</h2>
+    <div class="trip-card">
+      <h3>🌞 সকাল ১০:৩০ মিনিট</h3>
+      <h3>🌙 রাত ০৭:৩০ মিনিট</h3>
+      <h3>🕌 শুক্রবার স্পেশাল ট্রিপ</h3>
+    </div>
+
+<br><br>
+<div class="ad-box ad-sidebar" style="padding:0; border:none; background:transparent;">
+    <a href="https://dramaboxbd65.blogspot.com/2026/07/blog-post.html" target="_blank" rel="noopener noreferrer">
+        <img 
+            src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh_dfzVW5IFw_nVWTrDkovDCpEsPUcaVptIUvkF2Rn3Nt3Oiun4aeHck2BtgwZTVNlDEDAwWPkdcRJQ3ietspWCvHYZb-IQe_4z9Bd5tGlEeQ83GIUAXYOONUqobqVK3HBgBSr1W21Cu4te6s2tBBYXVHmVnMtsRGBrlzItX6Dx7zB4ZPqDnItmli411g/s320/1000009311.jpg"
+            alt="Advertisement"
+            style="display:block; width:100%; height:auto; border-radius:12px;"
+        >
+    </a>
+</div>
+
+  </div>
+
+  <div id="notice" class="section">
+    <h2 class="section-title">📢 নোটিশ বোর্ড</h2>
+    <p style="line-height: 1.6; color: #e2e8f0;">
+      আসসালামু আলাইকুম।<br>
+      আমাদের 𝐅𝐎𝐑 𝐁𝐔𝐒𝐒𝐈𝐃 Group ভার্সন ৩.৭.১ এর অফিসিয়াল অ্যাপ ডাউনলোড করে নিন নিচের ডাউনলোড বাটনে চাপ দিয়ে 😇<br><br>
+      <i>(সেটআপ করতে সমস্যা হলে এডমিনের সাথে যোগাযোগ করতে পারেন।)</i><br><br>
+      পাসওয়ার্ড: <b>No password</b> (ETS 2 map 1J OBB)
+    </p>
+    <a class="media-btn-long" style="background:#059669;" href="https://sharemods.com/9uyldigngxgg/premium_customise_VIP_Bangladeshi_high_quality__APK_OBB_BD_BUS_LOVER_ATIK__.zip.html" target="_blank">📥 64 BIT APK OBB</a>
+  </div>
+
+  <div id="admin" class="section">
+    <h2 class="section-title">👥 Admin Panel</h2>
+    <div class="admin-card">
+      <img src="https://i.postimg.cc/BQ5W4FW2/IMG-20260415-WA0009.jpg" class="admin-img" alt="Tasnim">
+      <div style="font-size:18px; color:var(--primary); font-weight:700;">MD Tasnim Alam</div>
+      <p style="margin:5px 0; font-size:14px; color:#cbd5e1;">Head Admin <br>পল্লবী, ঢাকা</p>
+      <a href="tel:+8801956346284" class="action-btn call-btn">📞 কল করুন</a>
+      <a href="https://www.facebook.com/share/1EgyQ4ckej/" target="_blank" class="action-btn fb-btn">🌐 ফেসবুক আইডি</a>
+    </div>
+    <div class="admin-card">
+      <img src="https://i.postimg.cc/XvL9w4Zg/IMG-20260415-WA0010.jpg" class="admin-img" alt="Tahmid">
+      <div style="font-size:18px; color:var(--primary); font-weight:700;">MD Tahmid</div>
+      <p style="margin:5px 0; font-size:14px; color:#cbd5e1;">Second Admin<br>পল্লবী, ঢাকা</p>
+      <a href="tel:+8801326245249" class="action-btn call-btn">📞 কল করুন</a>
+      <a href="https://www.facebook.com/profile.php?id=61552772180899" target="_blank" class="action-btn fb-btn">🌐 ফেসবুক আইডি</a>
+    </div>
+  </div>
+
+  <div id="media" class="section">
+    <h2 class="section-title">🔗 Community Links</h2>
+    <a class="media-btn-long" style="background:#1877f2;" href="https://www.facebook.com/mdtasnim.official" target="_blank">Facebook Group</a>
+    <a class="media-btn-long" style="background:#ff0000;" href="https://youtube.com/@mohammadtasnimalam?si=XNtV0kT_fO6BI35t" target="_blank">YouTube Channel</a>
+    <a class="media-btn-long" style="background:#0088cc;" href="https://t.me/FORBUSSID" target="_blank">Telegram</a>
+    <a class="media-btn-long" style="background:#25D366;" href="https://whatsapp.com/channel/0029Vb7kUaTDJ6Grx34Ea32n" target="_blank">WhatsApp Channel</a>
+    <a class="media-btn-long" style="background:#e1306c;" href="https://www.instagram.com/mdtasnim.official" target="_blank">Instagram</a>
+    <a class="media-btn-long" style="background:#000000; border: 1px solid rgba(255,255,255,0.3);" href="https://vm.tiktok.com/ZS9dmmMsdTM2M-aM53p/" target="_blank">TikTok</a>
+  </div>
+
+  <div id="apply" class="section">
+    <h2 class="section-title">📝 Application Form</h2>
+    <p style="text-align: center; color: #cbd5e1; margin-bottom: 20px;">গ্রুপে জয়েন বা মেম্বারশিপের জন্য নিচের ফরমটি পূরণ করুন:</p>
+    <a class="media-btn-long" style="background:#dc2626;" href="https://docs.google.com/forms/d/e/1FAIpQLSezivQ_N5hkujWI7ZZCpaNq4ta3QcHrJ4QjaXwWhBuHCgWAXg/viewform" target="_blank">📋 ফরম পূরণ করুন</a>
+  </div>
+
+  <div id="dev" class="section">
+    <h2 class="section-title">👨‍💻 ডেভেলপার পরিচয়</h2>
+    <div class="admin-card">
+      <img src="https://i.postimg.cc/Z5qFqP01/IMG-20260113-090952.jpg" class="admin-img" alt="Developer">
+      <div style="font-size:18px; color:var(--primary); font-weight:700;">BD BUS LOVER ATIK</div>
+      <p style="margin:5px 0; font-size:14px; color:#cbd5e1;">Web Developer</p>
+      <a href="tel:01827404265" class="action-btn call-btn">📞 কল করুন</a>
+      <a href="https://youtube.com/@bdbusloveratik?si=5wHqxj_tDjekJzwW" target="_blank" class="action-btn fb-btn" style="background: #ff0000;">🌐 YouTube Channel</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ট্যাব খোলার ফাংশন
+function openTab(tabId, isHistoryNavigation = false) {
+  document.getElementById('menuGrid').style.display = 'none';
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+  
+  const targetSection = document.getElementById(tabId);
+  if (targetSection) {
+    targetSection.style.display = 'block';
+    document.getElementById('backBtn').style.display = 'flex';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // মোবাইল ব্যাক বাটন হিস্ট্রি ম্যানেজমেন্ট
+    if (!isHistoryNavigation) {
+      history.pushState({ tab: tabId }, "", "#" + tabId);
+    }
+  }
+}
+
+// হোম মেনুতে ফেরত যাওয়ার ফাংশন
+function backToMenu(isHistoryNavigation = false) {
+  document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+  document.getElementById('menuGrid').style.display = 'grid';
+  document.getElementById('backBtn').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  // ব্যাক বাটন থেকে হিস্ট্রি আপডেট
+  if (!isHistoryNavigation && window.location.hash) {
+    history.pushState(null, "", window.location.pathname);
+  }
+}
+
+// মোবাইল/ব্রাউজারের আসল ব্যাক বাটন কন্ট্রোল করার ইভেন্ট
+window.addEventListener('popstate', function(event) {
+  if (event.state && event.state.tab) {
+    openTab(event.state.tab, true);
+  } else {
+    backToMenu(true);
+  }
+});
+
+// পেজ লোড হবার সময় URL হ্যাশ চেক
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash && document.getElementById(hash)) {
+    openTab(hash, true);
+  }
+});
+</script>
+
+</body>
+</html>
